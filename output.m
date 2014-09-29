@@ -5,16 +5,19 @@ colormap([greymap greymap greymap]);
 
 w = 200;
 h = 200;
-img = floor(255 * rand(w, h));
+img = rand(w, h, 3);
 
-for i = 1:(w-1)
-	for j = 1:(h-1)
-		r = rand();
-		if(r > 0.5)
-			img(i, j) = img(i + round(rand()), j + round(rand()));
+for k = 1:3
+	for i = 1:(w-1)
+		for j = 1:(h-1)
+			r = rand();
+			if(r > 0.1)
+				img(i, j, k) = img(i + round(rand()), j + round(rand()), k);
+			end;
 		end;
 	end;
 end;
+
 image(img);
 axis equal;
 axis([0 w 0 h]);
