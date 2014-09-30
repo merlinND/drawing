@@ -1,8 +1,8 @@
 % TODO: wrap into a function
 
 function img = makeImage()
-	exploration = 0.1;
-	iterations = 2; %floor(5 * rand()) + 1;
+	maxNoise = 0.5;
+	iterations = 5;
 	
 	greymap = linspace(0, 1, 255)';
 	colormap([greymap greymap greymap]);
@@ -13,21 +13,15 @@ function img = makeImage()
 	img = 1 * ones(w, h, 3);
 	
 	for it = 1:iterations
+		noise = maxNoise / (it * it);
 		for i = 1:w
 			for j = 1:w
-				r = rand();
 				for k = 1:3
-					if(r <= exploration)
-						x = i + round(rand());
-						y = j + round(rand());
-						color = (3 * rand() + getPixel(img, x, y, k)) / 4;
+					r = rand();
+					if(r <= noise)
+						color = rand;
 					else
-						x = i + round(rand());
-						y = j + round(rand());
-						
-						me = getPixel(img, i, j, k);
-						neighbor = getPixel(img, x, y, k);
-						color = me * neighbor; %(me + neighbor) / 2;
+						color = getRandomAdjacentPixel(img, i, j, k);
 					end;
 					img(i, j, k) = color;
 				end;
@@ -42,4 +36,13 @@ function pixel = getPixel(img, x, y, k)
 	coordinates = min([x y k], size(img));
 	coordinates = max(coordinates, [1 1 1]);
 	pixel = img(coordinates(1), coordinates(2), coordinates(3));
+end
+
+function pixel = getRandomAdjacentPixel(img, x, y, k)
+	% deltaX = round(2 * rand() * sign(rand() - 0.5));
+	% deltaY = round(2 * rand() * sign(rand() - 0.5));
+	deltaX = sign(rand() - 0.5);
+	deltaY = sign(rand() - 0.5);
+	
+	pixel = getPixel(img, x + deltaX, y + deltaY, k);
 end
