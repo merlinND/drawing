@@ -2,7 +2,7 @@ function functions = randomPainter(maxNoise, reach)
 	nCalls = zeros(3);
 
 	if(nargin < 1)
-		maxNoise = 0.10;
+		maxNoise = 0.01;
 		reach = 2;
 	elseif(nargin < 2)
 		reach = 2;
@@ -17,7 +17,8 @@ function functions = randomPainter(maxNoise, reach)
 		
 		r = rand();
 		if(r <= noise)
-			pixel = rand;
+			% TODO: pick pixel color
+			pixel = min(1.5 * rand(), 1);
 		else
 			pixel = getRandomAdjacentPixel(img, i, j, k, reach);
 		end;
