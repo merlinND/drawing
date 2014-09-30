@@ -3,7 +3,7 @@ function img = makeImage(functions)
 % Each function is called as fun(img, i, j)
 
 	% Parameters
-	iterations = 10;
+	iterations = 5;
 	
 	r = functions{1};
 	g = functions{2};
@@ -12,8 +12,8 @@ function img = makeImage(functions)
 	greymap = linspace(0, 1, 255)';
 	colormap([greymap greymap greymap]);
 
-	w = 20;
-	h = 20;
+	w = 50;
+	h = 50;
 	%img = rand(w, h, 3);
 	img = 1 * ones(w, h, 3);
 	
