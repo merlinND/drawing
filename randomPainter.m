@@ -12,12 +12,13 @@ function functions = randomPainter(maxNoise, reach)
 		% Deduce noise level from the number of calls
 		nPixels = size(img, 1) * size(img, 2);
 		nCalls(k) = nCalls(k) + 1;
-		iteration = floor(nCalls(k) / nPixels);
+		iteration = floor(nCalls(k) / nPixels) + 1;
 		noise = maxNoise / (iteration .^ 2);
-		
 		r = rand();
 		if(r <= noise)
-			% TODO: pick pixel color
+			% Pure random
+			%pixel = rand();
+			% Random within a range
 			pixel = getRandomColor(k);
 		else
 			pixel = getRandomAdjacentPixel(img, i, j, k, reach);
@@ -33,7 +34,7 @@ end
 
 function color = getRandomColor(k)
 	if(k == 1) % Red
-		color = getRandomNumber(0.2, 0.6);
+		color = getRandomNumber(1, 1);
 	elseif(k == 2) % Green
 		color = getRandomNumber(-1, 0.5);
 	else % Blue

@@ -13,8 +13,8 @@ function img = makeImage(w, h, functions, iterations)
 	greymap = linspace(0, 1, 255)';
 	colormap([greymap greymap greymap]);
 
-	%img = rand(w, h, 3);
-	img = 1 * ones(w, h, 3);
+	img = rand(w, h, 3);
+	%img = 1 * ones(w, h, 3);
 	
 	for it = 1:iterations
 		for i = 1:w
