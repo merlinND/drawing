@@ -32,8 +32,12 @@ function functions = randomPainter(maxNoise, reach)
 end
 
 function pixel = getRandomAdjacentPixel(img, x, y, k, reach)
-	deltaX = round(reach * rand() * sign(rand() - 0.5));
-	deltaY = round(reach * rand() * sign(rand() - 0.5));
+	% Random in all four directions
+	%deltaX = round(reach * rand() * sign(rand() - 0.5));
+	%deltaY = round(reach * rand() * sign(rand() - 0.5));
+	% Random among the previous pixels
+	deltaX = - round(reach * rand());
+	deltaY = - round(reach * rand());
 	
 	pixel = getPixel(img, x + deltaX, y + deltaY, k);
 end
