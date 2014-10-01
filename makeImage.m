@@ -1,4 +1,4 @@
-function img = makeImage(functions, iterations)
+function img = makeImage(w, h, functions, iterations)
 % Functions: cell array of three functions, one for each channel
 % Each function is called as fun(img, i, j)
 
@@ -13,8 +13,6 @@ function img = makeImage(functions, iterations)
 	greymap = linspace(0, 1, 255)';
 	colormap([greymap greymap greymap]);
 
-	w = 100;
-	h = 100;
 	%img = rand(w, h, 3);
 	img = 1 * ones(w, h, 3);
 	

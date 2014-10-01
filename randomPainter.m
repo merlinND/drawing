@@ -18,7 +18,7 @@ function functions = randomPainter(maxNoise, reach)
 		r = rand();
 		if(r <= noise)
 			% TODO: pick pixel color
-			pixel = min(1.5 * rand(), 1);
+			pixel = getRandomColor(k);
 		else
 			pixel = getRandomAdjacentPixel(img, i, j, k, reach);
 		end;
@@ -29,6 +29,24 @@ function functions = randomPainter(maxNoise, reach)
 		@(img, i, j) randomPaint(img, i, j, 2);
 		@(img, i, j) randomPaint(img, i, j, 3)
 	};
+end
+
+function color = getRandomColor(k)
+	if(k == 1) % Red
+		color = getRandomNumber(0.2, 0.6);
+	elseif(k == 2) % Green
+		color = getRandomNumber(-1, 0.5);
+	else % Blue
+		color = getRandomNumber(0.2, 3);
+	end;
+	
+	color = min(color, 1);
+	color = max(color, 0);
+end
+
+function x = getRandomNumber(a, b)
+% Returns a random number in the range [a, b]
+	x = a + (b - a) .* rand();
 end
 
 function pixel = getRandomAdjacentPixel(img, x, y, k, reach)
