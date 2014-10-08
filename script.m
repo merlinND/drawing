@@ -12,7 +12,7 @@ reach = 2;
 
 functions = randomPainter(noise, reach);
 %functions = constantColor([0.5 0.5 1]);
-functions{4} = @(i, j) circular(w, h, i, j);
+functions{4} = @(i, j) ellipsoid(w, h, 1.5, 0.5, i, j);
 
 img = makeImage(w, h, functions, iterations);
 displayImage(img);
