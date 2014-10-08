@@ -15,15 +15,17 @@ functions = randomPainter(noise, reach);
 %functions = constantColor([0.5 0.5 1]);
 
 % ----- Potential function
+%functions{4} = @(i, j) circular(w, h, i, j);
 %functions{4} = @(i, j) ellipsoid(w, h, 1.5, 0.5, i, j);
 %functions{4} = @(i, j) waves(w, h, 1, 3, i, j);
-%functions{4} = @(i, j) waves(w, h, 1, 3, i, j).^2;
+functions{4} = @(i, j) waves(w, h, 1, 3, i, j).^2;
 %functions{4} = @(i, j) modulo(w, h, 20, 20, i, j);
 %functions{4} = @(i, j) 1 - hyperboloid(w, h, 0.3, 0.8, i, j);
-functions{4} = @(i, j) 1 - hyperboloid(w, h, 0.3, 0.8, i, j);
+%functions{4} = @(i, j) hyperboloid(w, h, 0.3, 0.8, i, j);
 
 % ----- Potential application function
 functions{5} = @product;
+%functions{5} = @divide;
 %functions{5} = @(level, color) hsvBlend(2, level, color);
 %functions{5} = @(level, color) hsvBlend(1, level, color);
 
