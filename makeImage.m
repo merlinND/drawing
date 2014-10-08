@@ -24,13 +24,16 @@ function img = makeImage(w, h, functions, iterations)
 	for it = 1:iterations
 		for i = 1:w
 			for j = 1:h
-				color = [r(img, i, j) g(img, i, j) b(img, i, j)];
-				if(hasPotential)
-					color = applyPotential(potential, i, j, color);
-				end
-				
-				img(i, j, :) = color;
+				img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
 			end;
+		end;
+	end;
+	
+	for i = 1:w
+		for j = 1:h
+			if(hasPotential)
+				img(i, j, :) = applyPotential(potential, i, j, img(i, j, :));
+			end
 		end;
 	end;
 end
