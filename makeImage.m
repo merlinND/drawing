@@ -13,6 +13,7 @@ function img = makeImage(w, h, functions, iterations)
 	if(size(functions, 1) >= 4)
 		hasPotential = 1;
 		potential = functions{4};
+		mix = functions{5};
 	end;
 	
 	greymap = linspace(0, 1, 255)';
@@ -32,7 +33,7 @@ function img = makeImage(w, h, functions, iterations)
 	for i = 1:w
 		for j = 1:h
 			if(hasPotential)
-				img(i, j, :) = applyPotential(potential, i, j, img(i, j, :));
+				img(i, j, :) = applyPotential(potential, mix, i, j, img(i, j, :));
 			end
 		end;
 	end;

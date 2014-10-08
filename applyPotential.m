@@ -1,10 +1,14 @@
-function value = applyPotential(potential, x, y, color)
+function value = applyPotential(potential, mix, x, y, color)
 % potential: Function(x, y) => [0, 1]
+% mix: Function(level, rgbColor) => rgbColor
+
 	% TODO: make customizable
 	nLevels = 5;
 
 	level = discretize(potential(x, y), nLevels);
-	value = level * color;
+	
+	% Apply potential as a direct product
+	value = mix(level, color);
 end
 
 function level = discretize(value, levels)
