@@ -4,5 +4,5 @@ function displayImage(img)
 	
 	image(img);
 	axis equal;
-	axis([0 w 0 h]);
+	axis([1 w 1 h]);
 end
