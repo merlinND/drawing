@@ -3,7 +3,7 @@ function value = applyPotential(potential, x, y, color)
 	% TODO: make customizable
 	nLevels = 5;
 
-	level = discretize(potential(x, y), nLevels)	
+	level = discretize(potential(x, y), nLevels);
 	value = level * color;
 end
 
