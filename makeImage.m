@@ -9,6 +9,11 @@ function img = makeImage(w, h, functions, iterations)
 	r = functions{1};
 	g = functions{2};
 	b = functions{3};
+	hasPotential = 0;
+	if(size(functions, 1) >= 4)
+		hasPotential = 1;
+		potential = functions{4};
+	end;
 	
 	greymap = linspace(0, 1, 255)';
 	colormap([greymap greymap greymap]);
@@ -19,7 +24,12 @@ function img = makeImage(w, h, functions, iterations)
 	for it = 1:iterations
 		for i = 1:w
 			for j = 1:h
-				img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
+				color = [r(img, i, j) g(img, i, j) b(img, i, j)];
+				if(hasPotential)
+					color = applyPotential(potential, i, j, color);
+				end
+				
+				img(i, j, :) = color;
 			end;
 		end;
 	end;
