@@ -20,7 +20,12 @@ usePotential = 0;
 % TODO: arbitrary 'walk' function (top left to bottom right, from center)
 
 % ----- Image generator
-functions = randomPainter(noise, reach);
+colorRanges = [
+	0 1 % R
+	0 1 % G
+	0 1 % B
+];
+functions = randomPainter(colorRanges, noise, reach);
 %functions = constantColor([0.5 0.5 1]);
 
 % ----- Potential function

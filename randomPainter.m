@@ -1,25 +1,18 @@
-function functions = randomPainter(maxNoise, reach)
-	nCalls = zeros(3);
-
+function functions = randomPainter(colorRanges, noise, reach)
 	if(nargin < 1)
-		maxNoise = 0.01;
-		reach = 2;
+		colorRanges = [0 1; 0 1; 0 1];
 	elseif(nargin < 2)
+		noise = 0.01;
+		reach = 2;
+	elseif(nargin < 3)
 		reach = 2;
 	end;
 	
 	function pixel = randomPaint(img, i, j, k)
-		% Deduce noise level from the number of calls
-		nPixels = size(img, 1) * size(img, 2);
-		nCalls(k) = nCalls(k) + 1;
-		iteration = floor(nCalls(k) / nPixels) + 1;
-		noise = maxNoise / (iteration .^ 2);
 		r = rand();
 		if(r <= noise)
-			% Pure random
-			%pixel = rand();
-			% Random within a range
-			pixel = getRandomColor(k);
+			% Random within the given range
+			pixel = getRandomColor(k, colorRanges);
 		else
 			pixel = getRandomAdjacentPixel(img, i, j, k, reach);
 		end;
@@ -32,17 +25,9 @@ function functions = randomPainter(maxNoise, reach)
 	};
 end
 
-function color = getRandomColor(k)
-	if(k == 1) % Red
-		color = getRandomNumber(1, 1);
-	elseif(k == 2) % Green
-		color = getRandomNumber(-1, 0.5);
-	else % Blue
-		color = getRandomNumber(0.2, 3);
-	end;
-	
-	color = min(color, 1);
-	color = max(color, 0);
+function color = getRandomColor(k, colorRanges)
+	color = getRandomNumber(colorRanges(k, 1), colorRanges(k, 2));
+	color = min(max(color, 0), 1);
 end
 
 function x = getRandomNumber(a, b)
