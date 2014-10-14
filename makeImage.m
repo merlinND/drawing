@@ -16,13 +16,13 @@ function img = makeImage(w, h, functions, iterations)
 		mix = functions{5};
 	end;
 
-	img = rand(w, h, 3);
-	%img = 1 * ones(w, h, 3);
+	%img = rand(w, h, 3);
+	img = zeros(h, w, 3);
 	
 	for it = 1:iterations
 		for i = 1:w
 			for j = 1:h
-				img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
+				img(j, i, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
 			end;
 		end;
 	end;
@@ -30,7 +30,7 @@ function img = makeImage(w, h, functions, iterations)
 	for i = 1:w
 		for j = 1:h
 			if(hasPotential)
-				img(i, j, :) = applyPotential(potential, mix, i, j, img(i, j, :));
+				img(j, i, :) = applyPotential(potential, mix, i, j, img(i, j, :));
 			end
 		end;
 	end;

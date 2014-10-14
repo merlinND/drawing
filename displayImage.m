@@ -1,6 +1,6 @@
 function displayImage(img)
-	w = size(img, 1);
-	h = size(img, 2);
+	w = size(img, 2);
+	h = size(img, 1);
 	
 	% Clamp
 	img = min(1, img);
