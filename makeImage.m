@@ -17,7 +17,8 @@ function img = makeImage(w, h, functions, iterations)
 	end;
 
 	%img = rand(w, h, 3);
-	img = zeros(h, w, 3);
+	%img = zeros(h, w, 3);
+	img = getColorGradient(w, h);
 	
 	for it = 1:iterations
 		for i = 1:w
