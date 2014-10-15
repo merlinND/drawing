@@ -12,7 +12,7 @@ iterations = 3;
 % Less noise leads to more homogeneous images
 noise = 0.00001 / (2 * scale);
 % Larger reach allows for stroke interpenetration
-reach = 1;
+reach = [0 1];
 
 usePotential = 0;
 % Points used to generate the masking polygon (overall shape)

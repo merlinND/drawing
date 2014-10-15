@@ -40,8 +40,8 @@ function pixel = getRandomAdjacentPixel(img, i, j, k, reach)
 	%deltaI = round(reach * rand() * sign(rand() - 0.5));
 	%deltaJ = round(reach * rand() * sign(rand() - 0.5));
 	% Random among the previous pixels
-	deltaI = - round(reach * rand());
-	deltaJ = - round(reach * rand());
+	deltaI = - round(reach(1) * rand());
+	deltaJ = - round(reach(2) * rand());
 	if(deltaI == 0 && deltaJ == 0)
 		deltaI = -1;
 		deltaJ = -1;
