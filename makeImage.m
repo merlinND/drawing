@@ -2,7 +2,7 @@ function img = makeImage(base, functions, iterations)
 % Functions: cell array of three functions, one for each channel
 % Each function is called as fun(img, i, j)
 
-	if(nargin < 4)
+	if(nargin < 3)
 		iterations = 5;
 	end;
 	
