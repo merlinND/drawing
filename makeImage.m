@@ -1,10 +1,13 @@
-function img = makeImage(w, h, functions, iterations)
+function img = makeImage(base, functions, iterations)
 % Functions: cell array of three functions, one for each channel
 % Each function is called as fun(img, i, j)
 
 	if(nargin < 4)
 		iterations = 5;
 	end;
+	
+	w = size(base, 2);
+	h = size(base, 1);
 	
 	r = functions{1};
 	g = functions{2};
@@ -16,10 +19,8 @@ function img = makeImage(w, h, functions, iterations)
 		mix = functions{5};
 	end;
 
-	%img = rand(w, h, 3);
-	img = getColorGradient(w, h);
-	%img = zeros(h, w, 3);
-	%img(1, 1, :) = rand(3, 1);
+	img = base;
+	
 	
 	for it = 1:iterations
 		for i = 1:w

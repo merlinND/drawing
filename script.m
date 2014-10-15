@@ -1,6 +1,8 @@
 addpath('./potentials')
 addpath('./blends')
 
+% TODO: arbitrary 'walk' function (top left to bottom right, from center)
+
 % ----- Image parameters
 scale = 2;
 % Image dimensions in pixels
@@ -8,7 +10,7 @@ w = 100 * scale;
 h = 100 * scale;
 iterations = 1;
 % Less noise leads to more homogeneous images
-noise = 0.1 / (4 * scale);
+noise = 0.1 / (2 * scale);
 % Larger reach allows for stroke interpenetration
 reach = 2;
 
@@ -17,9 +19,15 @@ usePotential = 0;
 nPoints = 10;
 useConvexHull = 0;
 
-% TODO: arbitrary 'walk' function (top left to bottom right, from center)
+% ----- Base (zero state) image
+%base = rand(w, h, 3);
+base = getColorGradient(w, h);
+%base = zeros(h, w, 3);
+%base(1, 1, :) = rand(3, 1);
+
 
 % ----- Image generator
+% Select color range
 colorRanges = [
 	0 1 % R
 	0 1 % G
@@ -27,6 +35,7 @@ colorRanges = [
 ];
 functions = randomPainter(colorRanges, noise, reach);
 %functions = constantColor([0.5 0.5 1]);
+
 
 % ----- Potential function
 if(usePotential)
@@ -53,8 +62,9 @@ if(usePotential)
 	%functions{5} = @(level, color) hsvBlend(1, level, color);
 end;
 
+
 % ----- Run
-img = makeImage(w, h, functions, iterations);
+img = makeImage(base, functions, iterations);
 
 % ----- Display
 displayImage(img);
