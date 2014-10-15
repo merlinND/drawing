@@ -3,7 +3,7 @@ function value = applyPotential(potential, mix, x, y, color)
 % mix: Function(level, rgbColor) => rgbColor
 
 	% TODO: make customizable
-	nLevels = 5;
+	nLevels = 255;
 
 	level = discretize(potential(x, y), nLevels);
 	
