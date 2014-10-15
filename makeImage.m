@@ -21,19 +21,18 @@ function img = makeImage(base, functions, iterations)
 
 	img = base;
 	
-	
 	for it = 1:iterations
-		for i = 1:w
-			for j = 1:h
-				img(j, i, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
+		for j = 1:w
+			for i = 1:h
+				img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
 			end;
 		end;
 	end;
 	
-	for i = 1:w
-		for j = 1:h
+	for j = 1:w
+		for i = 1:h
 			if(hasPotential)
-				img(j, i, :) = applyPotential(potential, mix, i, j, img(i, j, :));
+				img(i, j, :) = applyPotential(potential, mix, i, j, img(i, j, :));
 			end
 		end;
 	end;

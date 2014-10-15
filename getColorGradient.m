@@ -6,7 +6,8 @@ function rgbGradient = getColorGradient(w, h, saturation, value)
 		value = 1;
 	end;
 	
-	hsvGradient = zeros(w, h, 3);
+	% h, w are inverted because the result is rotated below
+	hsvGradient = zeros(h, w, 3);
 	
 	% Generate a gradient with hue
 	% One hue value per image pixel

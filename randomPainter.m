@@ -35,13 +35,17 @@ function x = getRandomNumber(a, b)
 	x = a + (b - a) .* rand();
 end
 
-function pixel = getRandomAdjacentPixel(img, x, y, k, reach)
+function pixel = getRandomAdjacentPixel(img, i, j, k, reach)
 	% Random in all four directions
-	%deltaX = round(reach * rand() * sign(rand() - 0.5));
-	%deltaY = round(reach * rand() * sign(rand() - 0.5));
+	%deltaI = round(reach * rand() * sign(rand() - 0.5));
+	%deltaJ = round(reach * rand() * sign(rand() - 0.5));
 	% Random among the previous pixels
-	deltaX = - round(reach * rand());
-	deltaY = - round(reach * rand());
+	deltaI = - round(reach * rand());
+	deltaJ = - round(reach * rand());
+	if(deltaI == 0 && deltaJ == 0)
+		deltaI = -1;
+		deltaJ = -1;
+	end;
 	
-	pixel = getPixel(img, x + deltaX, y + deltaY, k);
+	pixel = getPixel(img, i + deltaI, j + deltaJ, k);
 end
