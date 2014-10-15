@@ -4,38 +4,38 @@ addpath('./blends')
 % TODO: arbitrary 'walk' function (top left to bottom right, from center)
 
 % ----- Image parameters
-scale = 2;
+scale = 0.5;
 % Image dimensions in pixels
 w = 100 * scale;
-h = 100 * scale;
-iterations = 1;
+h = 200 * scale;
+iterations = 3;
 % Less noise leads to more homogeneous images
-noise = 0.1 / (2 * scale);
+noise = 0.00001 / (2 * scale);
 % Larger reach allows for stroke interpenetration
-reach = 2;
+reach = 1;
 
 usePotential = 0;
 % Points used to generate the masking polygon (overall shape)
 nPoints = 10;
 useConvexHull = 0;
 
-% ----- Base (zero state) image
-%base = rand(w, h, 3);
-base = getColorGradient(w, h);
-%base = zeros(h, w, 3);
-%base(1, 1, :) = rand(3, 1);
-
 
 % ----- Image generator
 % Select color range
-colorRanges = [
-	0 1 % R
-	0 1 % G
-	0 1 % B
-];
+purple = 0.9 * [0 1; 0.3 0.3;  0.5 0.5];
+nPurple = 1 - purple;
+
+colorRanges = purple;
 functions = randomPainter(colorRanges, noise, reach);
 %functions = constantColor([0.5 0.5 1]);
 
+
+% ----- Base (zero state) image
+base = rand(h, w, 3);
+%base = getColorGradient(w, h);
+%base = zeros(h, w, 3);
+%base(1, 1, :) = rand(3, 1);
+%base = randInRange(w, h, colorRanges);
 
 % ----- Potential function
 if(usePotential)
