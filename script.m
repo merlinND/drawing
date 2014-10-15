@@ -22,20 +22,22 @@ useConvexHull = 0;
 
 % ----- Image generator
 % Select color range
-purple = 0.9 * [0 1; 0.3 0.3;  0.5 0.5];
-nPurple = 1 - purple;
+all = [0 1; 0 1; 0 1];
+purple = 0.8 * [0 1; 0.3 0.3;  0.5 0.5];
+pale = 1 * [0 1; 0.65 0.65;  0.88 0.88];
+blueGrass = 1 * [0.35 0.35; 0.75 0.75;  0.2 1];
 
-colorRanges = purple;
+colorRanges = blueGrass;
 functions = randomPainter(colorRanges, noise, reach);
 %functions = constantColor([0.5 0.5 1]);
 
 
 % ----- Base (zero state) image
-base = rand(h, w, 3);
+%base = rand(h, w, 3);
 %base = getColorGradient(w, h);
 %base = zeros(h, w, 3);
 %base(1, 1, :) = rand(3, 1);
-%base = randInRange(w, h, colorRanges);
+base = randInRange(w, h, colorRanges);
 
 % ----- Potential function
 if(usePotential)
