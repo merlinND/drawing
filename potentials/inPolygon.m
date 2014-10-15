@@ -10,8 +10,9 @@ function mask = inPolygon(points, w, h)
 	yGrid = reshape(yGrid, numel(yGrid), 1);
 	
 	indices = inpolygon(xGrid, yGrid, xPoints, yPoints);
-	mask = zeros(h, w); % Mask is used as mask(i, j)
-	in = reshape(indices, w, h)';
+	% Mask is used as mask(i, j)
+	in = reshape(indices, h, w);
+	mask = zeros(h, w);
 	mask(in) = 1;
 end
 
