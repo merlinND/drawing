@@ -8,20 +8,22 @@ function functions = randomPainter(colorRanges, noise, reach)
 		reach = 2;
 	end;
 	
-	function pixel = randomPaint(img, i, j, k)
+	function pixel = randomPaint(img, points, p, k)
+    % points: list of the points (order of walk)
+    % p: current point's index in the list
 		r = rand();
 		if(r <= noise)
 			% Random within the given range
 			pixel = getRandomColor(k, colorRanges);
 		else
-			pixel = getRandomAdjacentPixel(img, i, j, k, reach);
+			pixel = getRandomPreviousPixel(img, points, p, k, reach);
 		end;
 	end
 
 	functions = {
-		@(img, i, j) randomPaint(img, i, j, 1);
-		@(img, i, j) randomPaint(img, i, j, 2);
-		@(img, i, j) randomPaint(img, i, j, 3)
+		@(img, points, p) randomPaint(img, points, p, 1);
+		@(img, points, p) randomPaint(img, points, p, 2);
+		@(img, points, p) randomPaint(img, points, p, 3)
 	};
 end
 
@@ -33,6 +35,14 @@ end
 function x = getRandomNumber(a, b)
 % Returns a random number in the range [a, b]
 	x = a + (b - a) .* rand();
+end
+
+function pixel = getRandomPreviousPixel(img, points, p, k, reach)
+    offset = ceil(mean(reach) * rand());
+    p = max(1, p - offset);
+    i = points(p, 1);
+    j = points(p, 2);
+	pixel = getPixel(img, i, j, k);
 end
 
 function pixel = getRandomAdjacentPixel(img, i, j, k, reach)

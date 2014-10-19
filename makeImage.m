@@ -1,7 +1,7 @@
 function img = makeImage(base, points, functions, iterations)
 % points: list of points (coordinates) giving the walk order on the image
 % functions: cell array of three functions, one for each channel
-% Each function is called as fun(img, i, j)
+% Each function is called as fun(img, points, p)
 
 	if(nargin < 3)
 		iterations = 5;
@@ -28,7 +28,7 @@ function img = makeImage(base, points, functions, iterations)
             i = points(p, 1);
             j = points(p, 2);
             
-            img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
+            img(i, j, :) = [r(img, points, p) g(img, points, p) b(img, points, p)];
             %img(i, j, :) = [p p p] / numel(points);
 		end;
 	end;
