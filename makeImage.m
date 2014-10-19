@@ -1,5 +1,6 @@
-function img = makeImage(base, functions, iterations)
-% Functions: cell array of three functions, one for each channel
+function img = makeImage(base, points, functions, iterations)
+% points: list of points (coordinates) giving the walk order on the image
+% functions: cell array of three functions, one for each channel
 % Each function is called as fun(img, i, j)
 
 	if(nargin < 3)
@@ -20,20 +21,23 @@ function img = makeImage(base, functions, iterations)
 	end;
 
 	img = base;
-	
+    
+    % Walk the image in the specified order
 	for it = 1:iterations
-		for j = 1:w
-			for i = 1:h
-				img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
-			end;
+		for p = 1:length(points)
+            i = points(p, 1);
+            j = points(p, 2);
+            
+            img(i, j, :) = [r(img, i, j) g(img, i, j) b(img, i, j)];
+            %img(i, j, :) = [p p p] / numel(points);
 		end;
 	end;
 	
-	for j = 1:w
-		for i = 1:h
-			if(hasPotential)
-				img(i, j, :) = applyPotential(potential, mix, i, j, img(i, j, :));
-			end
-		end;
-	end;
+    if(hasPotential)
+        for p = 1:length(points)
+            i = points(p, 1);
+            j = points(p, 2);
+            img(i, j, :) = applyPotential(potential, mix, i, j, img(i, j, :));
+        end;
+    end;
 end

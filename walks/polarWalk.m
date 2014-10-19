@@ -1,5 +1,4 @@
 function points = polarWalk(w, h)
-
     centerI = (h+1) / 2;
     centerJ = (w+1) / 2;
 
