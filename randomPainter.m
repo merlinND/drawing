@@ -17,6 +17,7 @@ function functions = randomPainter(colorRanges, noise, reach)
 			pixel = getRandomColor(k, colorRanges);
 		else
 			pixel = getRandomPreviousPixel(img, points, p, k, reach);
+            %pixel = getRandomAdjacentPixel(img, points(p, 1), points(p, 2), k, reach);
 		end;
 	end
 
@@ -38,24 +39,37 @@ function x = getRandomNumber(a, b)
 end
 
 function pixel = getRandomPreviousPixel(img, points, p, k, reach)
-    offset = ceil(mean(reach) * rand());
-    p = max(1, p - offset);
     i = points(p, 1);
     j = points(p, 2);
-	pixel = getPixel(img, i, j, k);
+    
+    % Add noise in the position in all four directions
+	%deltaI = sign(rand() - 0.5) * randi([0 reach(1)]);
+	%deltaJ = sign(rand() - 0.5) * randi([0 reach(2)]);
+    
+    % The last few points walked give an indication of the movement
+    offset = ceil(mean(reach) * rand()) + 1;
+    earliest = max(1, p - offset);
+    % Vector towards the previous points
+    earlier = points(earliest:p, :);
+    delta = mean(earlier, 1) - [i j];
+    delta = round(delta);
+    % TODO: normalize delta
+    
+	pixel = getPixel(img, i + delta(1), j + delta(2), k);
 end
 
+% @deprecated (most likely)
 function pixel = getRandomAdjacentPixel(img, i, j, k, reach)
 	% Random in all four directions
-	%deltaI = round(reach * rand() * sign(rand() - 0.5));
-	%deltaJ = round(reach * rand() * sign(rand() - 0.5));
+	deltaI = sign(rand() - 0.5) * randi([0 reach(1)]);
+	deltaJ = sign(rand() - 0.5) * randi([0 reach(2)]);
 	% Random among the previous pixels
-	deltaI = - round(reach(1) * rand());
-	deltaJ = - round(reach(2) * rand());
-	if(deltaI == 0 && deltaJ == 0)
-		deltaI = -1;
-		deltaJ = -1;
-	end;
+	%deltaI = - round(reach(1) * rand());
+	%deltaJ = - round(reach(2) * rand());
+    %if(deltaI == 0 && deltaJ == 0)
+	%	deltaI = -1;
+	%	deltaJ = -1;
+	%end;
 	
 	pixel = getPixel(img, i + deltaI, j + deltaJ, k);
 end
