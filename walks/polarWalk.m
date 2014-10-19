@@ -12,6 +12,4 @@ function points = polarWalk(w, h)
 
     [pointsJ, pointsI] = pol2cart(sorted(:, 2), sorted(:, 1));
     points = round([pointsI + centerI, pointsJ + centerJ]);
-    % TODO: clip if necessary
-
 end
