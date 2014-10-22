@@ -6,7 +6,5 @@ function displayImage(img)
 	img = min(1, img);
 	img = max(0, img);
 	
-	image(img);
-	axis equal;
-	axis([1 w 1 h]);
+	imshow(img);
 end
