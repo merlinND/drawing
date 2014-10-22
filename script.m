@@ -2,18 +2,16 @@ addpath('./potentials');
 addpath('./blends');
 addpath('./walks');
 
-% TODO: arbitrary 'walk' function (top left to bottom right, from center)
-
 % ----- Image parameters
-scale = 0.5;
+scale = 5;
 % Image dimensions in pixels
 w = 100 * scale;
 h = 100 * scale;
 iterations = 2;
 % Less noise leads to more homogeneous images
-noise = 0.01 / (2 * scale);
-% Larger reach allows for stroke interpenetration
-reach = [1 1];
+noise = 0.1 / (2 * scale);
+% Larger reach allows for stroke interpenetration or a glittery feeling
+reach = [2 2];
 
 usePotential = 0;
 % Points used to generate the masking polygon (overall shape)
@@ -23,16 +21,21 @@ useConvexHull = 1;
 
 % ----- Color range
 all = [0 1; 0 1; 0 1];
+bright = [0.4 1; 0.4 1; 0.4 1];
+dark = [0 0.6; 0 0.6; 0 0.6];
+vibrantGrey = 0.5 * ones(3, 2) + 1 * [0 0.1; 0 0.1; 0 0.1];
 purple = 0.8 * [0 1; 0.3 0.3;  0.5 0.5];
-pale = 1 * [0 1; 0.65 0.65;  0.88 0.88];
+pinkBlue = 1 * [0 1; 0.65 0.65;  0.88 0.88];
 blueGrass = 1 * [0.35 0.35; 0.75 0.75;  0.2 1];
 orange = 1 * [1 1; 0.58 0.58; 0 0.6];
-colorRanges = purple;
+lagoon = 0.8 * [0.26 0.26; 0 0.6; 0.88 0.88];
+colorRanges = lagoon;
 
 
 % ----- Walk
-points = lineWalk(w, h);
-%points = polarWalk(w, h);
+%points = lineWalk(w, h);
+%points = columnWalk(w, h);
+points = polarWalk(w, h);
 
 
 % ----- Image generator
@@ -79,6 +82,7 @@ end;
 
 % ----- Run
 img = makeImage(base, points, functions, iterations);
+
 
 % ----- Display
 displayImage(img);

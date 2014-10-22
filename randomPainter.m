@@ -61,15 +61,15 @@ end
 % @deprecated (most likely)
 function pixel = getRandomAdjacentPixel(img, i, j, k, reach)
 	% Random in all four directions
-	deltaI = sign(rand() - 0.5) * randi([0 reach(1)]);
-	deltaJ = sign(rand() - 0.5) * randi([0 reach(2)]);
+	%deltaI = sign(rand() - 0.5) * randi([0 reach(1)]);
+	%deltaJ = sign(rand() - 0.5) * randi([0 reach(2)]);
 	% Random among the previous pixels
-	%deltaI = - round(reach(1) * rand());
-	%deltaJ = - round(reach(2) * rand());
-    %if(deltaI == 0 && deltaJ == 0)
-	%	deltaI = -1;
-	%	deltaJ = -1;
-	%end;
+	deltaI = - round(reach(1) * rand());
+	deltaJ = - round(reach(2) * rand());
+    if(deltaI == 0 && deltaJ == 0)
+		deltaI = -1;
+		deltaJ = -1;
+	end;
 	
 	pixel = getPixel(img, i + deltaI, j + deltaJ, k);
 end
