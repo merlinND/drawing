@@ -6,7 +6,7 @@ var fs = require('fs');
  * Parameters
  */
 /** Chars to be stripped out */
-var strips = /[“”‘\?!#\.:,;()"'']*/gi;
+var strips = /[“”‘\?!#\.:,;()"''\d]*/gi;
 /** Chars to be replaced by a single space */
 var spaced = /[\n-/]+/gi;
 /** Sequences to be stripped */
@@ -24,7 +24,7 @@ var minLength = function(length) {
   };
 };
 var byLength = function(a, b) {
-  return a.length > b.length;
+  return a.length - b.length;
 };
 var groupByValue = function(container) {
   return function(w) {
@@ -36,6 +36,10 @@ var groupByValue = function(container) {
     }
   };
 };
+// Place a space between each char
+var spacer = function(s) {
+  return s.replace(/([^ ])/gi, '$1 ').trim();
+};
 
 fs.readFile('./data/article.md', function(err, text) {
   text = ('' + text)
@@ -45,13 +49,24 @@ fs.readFile('./data/article.md', function(err, text) {
     .replace(spaced, ' ')
     .trim();
 
-  var words = text.split(' ')
+  var words = text
+    .split(' ')
     .map(trimmer)
-    .filter(minLength(1))
-    .sort(byLength);
+    .filter(minLength(1));
+  // console.log(words);
 
   var occurrences = {};
   words.map(groupByValue(occurrences));
+  // console.log(occurrences);
 
-  console.log(occurrences);
+  // Take unique words
+  var unique = Object.keys(occurrences)
+    .sort(byLength);
+  //console.log(unique.join(' '));
+
+
+  var string = unique
+    .map(spacer)
+    .join(' ');
+  console.log(string);
 });
