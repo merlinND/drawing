@@ -41,7 +41,7 @@ var spacer = function(s) {
   return s.replace(/([^ ])/gi, '$1 ').trim();
 };
 
-fs.readFile('./data/article.md', function(err, text) {
+var getWords = function(text) {
   text = ('' + text)
     .toLowerCase()
     .replace(strips, '')
@@ -49,24 +49,30 @@ fs.readFile('./data/article.md', function(err, text) {
     .replace(spaced, ' ')
     .trim();
 
-  var words = text
+  return text
     .split(' ')
     .map(trimmer)
     .filter(minLength(1));
-  // console.log(words);
+};
 
-  var occurrences = {};
-  words.map(groupByValue(occurrences));
-  // console.log(occurrences);
-
+var getUniqueByLength = function(words) {
   // Take unique words
-  var unique = Object.keys(occurrences)
-    .sort(byLength);
-  //console.log(unique.join(' '));
-
-
-  var string = unique
+  return words
+    .sort(byLength)
     .map(spacer)
     .join(' ');
-  console.log(string);
+};
+
+var getWordsByLength = function(words) {
+  var occurrences = {};
+  words.map(groupByValue(occurrences));
+  return occurrences;
+};
+
+fs.readFile('./data/article.md', function(err, text) {
+  var words = getWords(text);
+
+  // console.log(words);
+  // console.log(getUniqueByLength(words));
+  console.log(getWordsByLength(words));
 });
