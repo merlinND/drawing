@@ -11,6 +11,8 @@ var strips = /[“”‘\?!#\.:,;()"''\d]*/gi;
 var spaced = /[\n-/]+/gi;
 /** Sequences to be stripped */
 var seqs = /’s/gi;
+/** Words not to include as keywords */
+var excludes = ['the', 'to', 'of', 'and', 'a', 'that', 'for', 'in', 'this', 'are', 'these', 'as', 'was', 'an', 'be', 'is', 'on', 'from'];
 
 /**
  * Filters
@@ -137,12 +139,42 @@ var getWordsByCount = function(words) {
   });
   return occurrences;
 };
+/** Make a visual histogram of the top `n` most used words */
+var printVisualHistogram = function(words, n, excludes) {
+  // TODO: make vertical?
+  if(!n) {
+    n = 10;
+  }
+  if(!excludes) {
+    excludes = [];
+  }
+
+  var wordsByCount = getWordsByCount(words);
+  var counts = Object.keys(wordsByCount);
+  var i = counts.length - 1;
+  var nPrinted = 0;
+  while(nPrinted < n && i >= 0) {
+    var l = wordsByCount[counts[i]];
+    for(var j = 0; j < l.length; j += 1) {
+      if(!contains(excludes, l[j])) {
+        for(var k = 0; k < counts[i]; k += 1) {
+          process.stdout.write(l[j] + ' ');
+        }
+        process.stdout.write('\n');
+        nPrinted += 1;
+      }
+    }
+
+    i -= 1;
+  }
+};
 
 fs.readFile('./data/article.md', function(err, text) {
   var words = getWords(text);
 
   // console.log(words);
-  console.log(getSpacedWords(words));
-  //console.log(getWordsCount(words));
+  // console.log(getSpacedWords(words));
+  // console.log(getWordsCount(words));
   // console.log(getWordsByCount(words));
+  printVisualHistogram(words, 10, excludes);
 });
