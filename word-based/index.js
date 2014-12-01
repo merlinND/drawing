@@ -53,8 +53,13 @@ var trimmer = function(w) {
   return w.trim();
 };
 /** Place a space between each char */
-var spacer = function(s) {
-  return s.replace(/([^ ])/gi, '$1 ').trim();
+var spacer = function(s, unbreakable) {
+  var sub = '$1 ';
+  if(unbreakable) {
+    sub = '$1 ';
+  }
+
+  return s.replace(/([^ ])/gi, sub).trim();
 };
 /** Sort the given list */
 var sorter = function(l) {
@@ -153,16 +158,39 @@ var printVisualHistogram = function(words, n, excludes) {
   var counts = Object.keys(wordsByCount);
   var i = counts.length - 1;
   var nPrinted = 0;
+  /** Space occupied by the most repeated word (= occurrences * number of letters) */
+  var maxLength, maxCount, minCount = 0;
   while(nPrinted < n && i >= 0) {
     var l = wordsByCount[counts[i]];
-    for(var j = 0; j < l.length; j += 1) {
+    var j = 0;
+    while(nPrinted < n && j < l.length) {
       if(!contains(excludes, l[j])) {
-        for(var k = 0; k < counts[i]; k += 1) {
-          process.stdout.write(l[j] + ' ');
+        // Print once
+        // console.log(spacer(l[j]));
+
+        // Repeat by the word's count
+        // for(var k = 0; k < counts[i]; k += 1) {
+        //   process.stdout.write(spacer(l[j], true) + ' ');
+        // }
+        // process.stdout.write('\n');
+
+        // Repeat by the word's count, normalized by number of letters
+        if(nPrinted === 0) {
+          maxLength = l[j].length;
+          maxCount = counts[i];
         }
-        process.stdout.write('\n');
+
+        var repeats = (counts[i] - minCount) / (maxCount - minCount);
+        console.log(repeats);
+        repeats = maxLength * maxCount * repeats;
+        // for(var k = 0; k < repeats; k += l[j].length) {
+        //   process.stdout.write(spacer(l[j]) + ' ');
+        // }
+        // process.stdout.write(' ');
+
         nPrinted += 1;
       }
+      j += 1;
     }
 
     i -= 1;
@@ -176,5 +204,5 @@ fs.readFile('./data/article.md', function(err, text) {
   // console.log(getSpacedWords(words));
   // console.log(getWordsCount(words));
   // console.log(getWordsByCount(words));
-  printVisualHistogram(words, 10, excludes);
+  printVisualHistogram(words, 9, excludes);
 });
